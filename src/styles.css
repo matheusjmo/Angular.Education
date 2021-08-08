@@ -1,0 +1,66 @@
+/* You can add global styles to this file, and also import other style files */
+.img{
+    border-color: aliceblue;
+    border-width: 5px;
+}
+
+body{
+    margin: 0px;
+}
+
+.logo {
+    float: left;
+    padding: 10px;
+}
+
+header {
+    background: #DB0B5B;
+}
+
+header::after {
+    content: '';
+    display: table;
+    clear: both;
+}
+
+.navbar {
+    width: 100%;
+    margin: 0 auto;
+    float: right;
+}
+
+.navbar ul{
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    padding-left: 250px;
+}
+
+.navbar li{
+    display: inline-block;
+    margin: 35px;
+    position: relative;
+}
+
+.navbar a{
+    color: #ffff;
+    text-decoration: none;
+    font-family: Trebuchet MS;
+}
+
+.navbar a:hover {
+    color: #ffff;
+}
+
+.navbar a::before {
+    content: '';
+    display: block;
+    height: 5px;
+    width: 0%;
+    background-color: #ffff;
+    transition: all ease-in-out 200ms;
+}
+
+.navbar a:hover::before {
+    width: 100%;
+}
