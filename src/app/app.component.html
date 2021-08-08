@@ -11,7 +11,7 @@
       <p-card styleClass="p-card-shadow">
         <div class="grid">
           <div class="col-12">
-            <!-- <p-dropdown [options]="cities" [(ngModel)]="selectedCity" optionLabel="name"></p-dropdown> -->
+            <p-dropdown placeholder="Ciências" [disabled]="true"></p-dropdown>
           </div>
         </div>
       </p-card>
@@ -21,7 +21,7 @@
       <div class="grid">
         <tr *ngFor="let title of cards; let i = index">
           <div class="col-2">
-            <p-card id="card" title="Clique para ler notícia completa" [style]="{width: '320px'}"
+            <p-card class="card" title="Clique para ler notícia completa" [style]="{width: '320px'}"
               styleClass="p-card-shadow" (click)="cardsModal(title.id)">
               <ng-template pTemplate="header">
                 <img id="imgCard" alt="Card" src="assets/{{title.pic}}.jpg">
@@ -39,7 +39,7 @@
                 <div class="col-1">
                   <button pButton pRipple type="button" icon="pi pi-plus"
                     class="p-button-rounded p-button-success p-button-outlined" title="Adicionar ao gerador de aulas"
-                    (click)="addGenerator(title.id)"></button>
+                    (click)="addGenerator(title.id)" style="color: #FF8A3D;"></button>
                 </div>
               </div>
             </p-card>
@@ -49,7 +49,7 @@
     </div>
 
     <div class="col-3">
-      <p-card>
+      <p-card styleClass="p-card-shadow">
         <div class="grid border-round" id="generator">
           <div class="col-7">
             <h2 style="color: white;"><b>Gerar Aula</b></h2>
