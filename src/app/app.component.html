@@ -1,16 +1,9 @@
-<!DOCTYPE html>
-<html>
-
-<head>
-</head>
-
-<body>
   <div class="grid">
 
     <div id="filter" class="col-2">
       <p-card styleClass="p-card-shadow">
         <div class="grid">
-          <div class="col-12">
+          <div class="col">
             <p-dropdown placeholder="Ciências" [disabled]="true"></p-dropdown>
           </div>
         </div>
@@ -21,7 +14,7 @@
       <div class="grid">
         <tr *ngFor="let title of cards; let i = index">
           <div class="col-2">
-            <p-card class="card" title="Clique para ler notícia completa" [style]="{width: '320px'}"
+            <p-card class="card" title="Clique para ler notícia completa"
               styleClass="p-card-shadow" (click)="cardsModal(title.id)">
               <ng-template pTemplate="header">
                 <img id="imgCard" alt="Card" src="assets/{{title.pic}}.jpg">
@@ -51,13 +44,12 @@
     <div class="col-3">
       <p-card styleClass="p-card-shadow">
         <div class="grid border-round" id="generator">
-          <div class="col-7">
-            <h2 style="color: white;"><b>Gerar Aula</b></h2>
+          <div class="col-9 pt-5">
+            <h2 id="generatorTxt"><b>Gerar Aula</b></h2>
           </div>
-          <div class="col-2 pt-4">
-            <button pButton pRipple type="button" icon="pi pi-download" label="download"
-              class="p-button-raised p-button-text" style="background-color: white; color: #DB0B5B;"
-              title="fazer download"></button>
+          <div class="col pt-5">
+            <button id="generatorBtn" pButton pRipple type="button" icon="pi pi-download"
+              class="p-button-raised p-button-text" title="Fazer download"></button>
           </div>
         </div>
         <br>
@@ -72,15 +64,13 @@
       </p-card>
     </div>
 
-    <p-dialog id="classModal" [header]="classTitle" [(visible)]="classModal" [modal]="true" [baseZIndex]="10000">
+    <p-dialog id="classModal" [header]="classTitle" [(visible)]="classModal" [draggable]="false" [modal]="true" [baseZIndex]="10000">
       <p style="font-family: Trebuchet MS;">{{classComplete}}</p>
+      <!--div [innerHTML]="comment"></div-->
     </p-dialog>
 
-    <p-dialog id="failModal" header="Aula ja adicionada" [(visible)]="failModal" [modal]="true" [baseZIndex]="10000">
+    <p-dialog id="failModal" header="Aula ja adicionada" [(visible)]="failModal" [draggable]="false" [modal]="true" [baseZIndex]="10000">
       <h3 style="font-family: Trebuchet MS;">Escolha outras aulas para adicionar ao gerador</h3>
     </p-dialog>
 
   </div>
-</body>
-
-</html>
