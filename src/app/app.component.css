@@ -1,5 +1,5 @@
 html {
-    background-color: #F5F7F6;
+    background-color: #d1d4d3;
     width: 100%;
     background-size: 100%;
  }
@@ -14,7 +14,9 @@ html {
 }
 
 #generator{
-    background-color: #FF8A3D; 
+    background-color: #FF8A3D;
+    border-bottom-right-radius: 20px;
+    border-top-left-radius: 20px;
     width: 100%; 
     height: 100px;
     margin-right: 0rem;
@@ -41,6 +43,11 @@ html {
     border-color: white;
 }
 
+::ng-deep .p-slider{
+    width: 60%;
+    margin-left: 20%;
+}
+
 ::ng-deep .p-card{
     border-radius: 10px;
     
@@ -61,4 +68,8 @@ html {
     transform: translateY(-5px);
 }
 
+#filter ::ng-deep .p-dropdown, .p-inputtext, .p-input-icon-left{
+    border-radius: 50px;
+    width: 100%;
+}
 

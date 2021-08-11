@@ -12,7 +12,7 @@ import { CardsService } from './service/card.service';
 
 export class AppComponent {
 
-  contador: number = 0;
+  cont: number = 0;
 
   generator: any[] = [];
   cards: Card2[] = [];
@@ -26,13 +26,46 @@ export class AppComponent {
   condButton: boolean = false;
   loading: boolean = false;
 
-  constructor(private service: CardsService) { }
+  rangeValues: number[] = [1, 9];
+
+  themes: string[] = []
+  selectedTheme: string = "";
+
+  year: any[] = [];
+
+  constructor(private service: CardsService) {
+    this.year = [
+      { "serie": "1° ano" },
+      { "serie": "2° ano" },
+      { "serie": "3° ano" },
+      { "serie": "4° ano" },
+      { "serie": "5° ano" }
+    ]
+  }
+
+  /*   povoateDropdown() {
+      var contD = 0;
+      var tema = "";
+      for (tema of this.cards[contD].tema) {
+        this.cont++;
+        this.themes.push(tema);
+      }
+    } */
 
   ngOnInit() {
     this.service.cards.subscribe(
       data => this.cards = data,
       error => console.log(error)
     );
+  }
+
+  ngDoCheck() {
+    var length = this.cards.length;
+    for (let i = 0; i < length; i++) {
+      if (!this.themes.includes(this.cards[i].tema)) {
+        this.themes.push(this.cards[i].tema);
+      }
+    }
   }
 
   addGenerator(n: any) {

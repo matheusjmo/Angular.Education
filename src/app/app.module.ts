@@ -7,6 +7,9 @@ import { CardModule } from 'primeng/card';
 import { DialogModule } from 'primeng/dialog';
 import { MenubarModule } from 'primeng/menubar';
 import { DropdownModule } from 'primeng/dropdown';
+import { InputTextModule } from 'primeng/inputtext';
+import { ListboxModule } from 'primeng/listbox';
+import { CheckboxModule } from 'primeng/checkbox';
 
 import { AppComponent } from './app.component';
 import { FormsModule } from '@angular/forms';
@@ -24,7 +27,10 @@ import { FormsModule } from '@angular/forms';
     CardModule,
     DialogModule,
     MenubarModule,
-    DropdownModule
+    DropdownModule,
+    InputTextModule,
+    ListboxModule,
+    CheckboxModule
   ],
   providers: [],
   bootstrap: [AppComponent]
