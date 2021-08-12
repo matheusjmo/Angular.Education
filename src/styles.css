@@ -1,10 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
-.img{
-    border-color: aliceblue;
-    border-width: 5px;
-}
-
 body{
+    background-color: #F5F7F6;
     margin: 0px;
 }
 
@@ -34,7 +30,9 @@ header::after {
     margin: 0;
     padding: 0;
     list-style: none;
-    padding-left: 250px;
+    padding-top: 20px;
+    padding-left: 25%;
+    width: 75%;
 }
 
 .navbar li{
