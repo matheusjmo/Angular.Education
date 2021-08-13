@@ -19,34 +19,75 @@
     <div id="filter" class="col-2">
         <p-card styleClass="p-card-shadow">
             <div id="filter" class="grid">
+
                 <div class="col-12">
                     <p-dropdown placeholder="Ciências" [disabled]="true" title="Por enquanto só temos aulas de ciências"></p-dropdown>
                 </div>
                 <div class="col-12">
                     <p-dropdown [options]="themes" [(ngModel)]="selectedTheme" placeholder="Escolha um tema" title="Escolha um tema"></p-dropdown>
                 </div>
+
+                <h2 style="padding-left: 15px;">Series: </h2>
+                <div class="grid">
+                    <div class="col-6" style="padding-left: 15px;">
+                        <p-checkbox name="ano1" value="ano1" [(ngModel)]="selectedYear" label="1º ano"></p-checkbox>
+                    </div>
+                    <div class="col-6" style="padding-left: 30px;">
+                        <p-checkbox name="ano2" value="ano2" [(ngModel)]="selectedYear" label="2º ano"></p-checkbox>
+                    </div>
+                    <div class="col-6" style="padding-left: 15px;">
+                        <p-checkbox name="ano3" value="ano3" [(ngModel)]="selectedYear" label="3º ano"></p-checkbox>
+                    </div>
+                    <div class="col-6" style="padding-left: 30px;">
+                        <p-checkbox name="ano4" value="ano4" [(ngModel)]="selectedYear" label="4º ano"></p-checkbox>
+                    </div>
+                    <div class="col-6" style="padding-left: 15px;">
+                        <p-checkbox name="ano5" value="ano5" [(ngModel)]="selectedYear" label="5º ano"></p-checkbox>
+                    </div>
+                    <div class="col-6" style="padding-left: 30px;">
+                        <p-checkbox name="ano6" value="ano6" [(ngModel)]="selectedYear" label="6º ano"></p-checkbox>
+                    </div>
+                </div>
+
+                <h2 style="padding-left: 15px;">Formato: </h2>
+                <div class="grid">
+                    <div class="col-6" style="padding-left: 15px;">
+                        <p-checkbox name="imagem" value="imagem" [(ngModel)]="selectedFormat" label="imagem"></p-checkbox>
+                    </div>
+                    <div class="col-6" style="padding-left: 30px;">
+                        <p-checkbox name="video" value="video" [(ngModel)]="selectedFormat" label="vídeo"></p-checkbox>
+                    </div>
+                    <div class="col-6" style="padding-left: 15px;">
+                        <p-checkbox name="quadrinhos" value="quadrinhos" [(ngModel)]="selectedFormat" label="quadrinhos"></p-checkbox>
+                    </div>
+                    <div class="col-6" style="padding-left: 30px;">
+                        <p-checkbox name="gifs" value="gifs" [(ngModel)]="selectedFormat" label="gifs"></p-checkbox>
+                    </div>
+                </div>
+
             </div>
         </p-card>
     </div>
 
     <div class="col-7">
         <div class="grid">
-            <tr *ngFor="let title of cards; let i = index">
+            <tr *ngFor="let card of cards; let i = index">
                 <div class="col-2">
-                    <p-card class="card" title="Clique para ler notícia completa" styleClass="p-card-shadow" (click)="cardsModal(title.id)">
+                    <p-card class="card" title="Clique para ler notícia completa" styleClass="p-card-shadow" (click)="cardsModal(card.id)">
                         <ng-template pTemplate="header">
-                            <img id="imgCard" alt="Card" src="assets/{{title.pic}}.jpg">
+                            <!-- 320x192 -->
+                            <img id="imgCard" alt="Card" src="assets/{{card.pic}}.jpg">
                         </ng-template>
-                        <h2 style="margin-top: -20px;"><b>{{title.titulo}}</b></h2>
-                        <p>{{title.conteudo}}</p>
-                        <strong>Fonte: {{title.fonte}}</strong>
+                        <h2 style="margin-top: -20px;"><b>{{card.titulo}}</b></h2>
+                        <p>{{shortedContent(card.conteudo)}}</p>
+                        <strong>Fonte: {{card.fonte}}</strong>
                         <div class="grid">
                             <div class="col-8"></div>
                             <div class="col-2">
                                 <button pButton pRipple type="button" icon="pi pi-times" class="p-button-rounded p-button-danger p-button-outlined" title="Não tenho interesse" style="color: #D32F2F;"></button>
                             </div>
                             <div class="col-1">
-                                <button pButton pRipple type="button" icon="pi pi-plus" class="p-button-rounded p-button-success p-button-outlined" title="Adicionar ao gerador de aulas" (click)="addGenerator(title.id)" style="color: #34A853;"></button>
+                                <button pButton pRipple type="button" icon="pi pi-plus" class="p-button-rounded p-button-success p-button-outlined" title="Adicionar ao gerador de aulas" (click)="addGenerator(card.id)" style="color: #34A853;"></button>
                             </div>
                         </div>
                     </p-card>
@@ -56,7 +97,7 @@
     </div>
 
     <div class="col-3">
-        <p-card styleClass="p-card-shadow">
+        <p-card styleClass="p-card-shadow" title="Apagar aula do gerador">
             <div class="grid" id="generator">
                 <div class="col-9 pt-5">
                     <h2 id="generatorTxt"><b>Gerar Aula</b></h2>
@@ -66,14 +107,26 @@
                 </div>
             </div>
             <br>
-            <li *ngFor="let title of set">
-                {{title}}
-            </li>
-            <!--         <ng-template pTemplate="footer">
-          <div class="col-12" style="text-align: center;">
-            <p-button label="download" icon="pi pi-download" [loading]="loading" (onClick)="load()"></p-button>
-          </div>
-        </ng-template> -->
+
+            <tr *ngFor="let card of setCards">
+                <div class="grid" id="generatorCard" (click)="generatorModal(card.id)">
+                    <div class="col-4" style="padding: 0px;">
+                        <img id="imgGenerator" alt="Card" src="assets/{{card.pic}}.jpg">
+                    </div>
+                    <div class="col" style="padding-top: 20px;">
+                        <b>{{card.titulo}}</b>
+                    </div>
+                </div>
+            </tr>
+
+            <!--             <tr *ngFor="let title of setCards">
+                <p-card class="generatorCard">
+                    <ng-template pTemplate="header">
+                        <img id="imgGenerator" alt="Card" src="assets/{{title.pic}}.jpg">
+                    </ng-template>
+                </p-card>
+            </tr> -->
+
         </p-card>
     </div>
 
@@ -84,6 +137,12 @@
 
     <p-dialog id="failModal" header="Aula ja adicionada" [(visible)]="failModal" [draggable]="false" [modal]="true" [baseZIndex]="10000">
         <h3 style="font-family: Trebuchet MS;">Escolha outras aulas para adicionar ao gerador</h3>
+    </p-dialog>
+
+    <p-dialog class="deleteModal" header="Deseja remover essa aula?" [(visible)]="deleteModal" [draggable]="false" [modal]="true" [baseZIndex]="10000">
+        <p style="font-family: Trebuchet MS;">{{classTitle}}</p>
+        <br>
+        <button pButton pRipple label="Delete" icon="pi pi-trash" style (click)="generatorDelete()" style="background-color: #D32F2F; margin-left: 70px;"></button>
     </p-dialog>
 
 </div>

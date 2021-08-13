@@ -11,9 +11,14 @@ export class AulaComponent implements OnInit {
 
   cont: number = 0;
 
-  generator: any[] = [];
+  themes: string[] = []
+  selectedTheme: string = "";
+  selectedYear: string[] = [];
+  selectedFormat: string[] = [];
+
   cards: Card2[] = [];
-  set = new Set<string>();
+  generator: any[] = [];
+  setCards = new Set<Card2>();
 
   classModal: boolean = false;
   classComplete: string = "";
@@ -21,34 +26,14 @@ export class AulaComponent implements OnInit {
 
   failModal: boolean = false;
   condButton: boolean = false;
+
+  deleteModal: boolean = false;
+  deleteCardGenerator: any;
+
   loading: boolean = false;
 
-  rangeValues: number[] = [1, 9];
 
-  themes: string[] = []
-  selectedTheme: string = "";
-
-  year: any[] = [];
-
-  constructor(private service: CardsService) {
-
-    this.year = [
-      { "serie": "1° ano" },
-      { "serie": "2° ano" },
-      { "serie": "3° ano" },
-      { "serie": "4° ano" },
-      { "serie": "5° ano" }
-    ]
-  }
-
-  /*   povoateDropdown() {
-      var contD = 0;
-      var tema = "";
-      for (tema of this.cards[contD].tema) {
-        this.cont++;
-        this.themes.push(tema);
-      }
-    } */
+  constructor(private service: CardsService) { }
 
   ngOnInit() {
     this.service.cards.subscribe(
@@ -66,15 +51,44 @@ export class AulaComponent implements OnInit {
     }
   }
 
+  shortedContent(n: string) {
+    if (n.length <= 120) {
+      return n;
+    }
+    else {
+      return n.substr(0, 120) + "...";
+    }
+  }
+
   addGenerator(n: any) {
     this.condButton = true;
-    if (!this.set.has(this.cards[n].titulo)) {
-      this.set.add(this.cards[n].titulo);
+    if (!this.setCards.has(this.cards[n])) {
+      this.setCards.add(this.cards[n]);
     }
     else {
       this.failModal = true;
     }
   }
+
+  generatorModal(n: any) {
+    this.deleteModal = true;
+    this.classTitle = this.cards[n].titulo;
+    this.deleteCardGenerator = this.cards[n]
+  }
+
+  generatorDelete() {
+    this.setCards.delete(this.deleteCardGenerator);
+    this.deleteModal = false;
+  }
+
+
+  /*   generatorModal(n: any) {
+      this.deleteModal = true;
+      this.classTitle = this.cards[n].titulo;
+      if (this.generatorDelete) {
+        this.setCards.delete(this.cards[n]);
+      }
+    } */
 
   cardsModal(n: any) {
     //adicionar titulo ao header
@@ -90,7 +104,6 @@ export class AulaComponent implements OnInit {
     }
     this.condButton = false;
   }
-
 
   load() {
     this.loading = true;

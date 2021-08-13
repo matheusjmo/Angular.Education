@@ -36,7 +36,7 @@ import { HomepageComponent } from './homepage/homepage.component';
     DropdownModule,
     InputTextModule,
     ListboxModule,
-    CheckboxModule
+    CheckboxModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
