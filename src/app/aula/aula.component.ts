@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Card2 } from '../model/card2.interface';
+import { asapScheduler } from 'rxjs';
+import { Card } from '../model/card.interface';
 import { CardsService } from '../service/card.service';
 
 @Component({
@@ -16,9 +17,9 @@ export class AulaComponent implements OnInit {
   selectedYear: string[] = [];
   selectedFormat: string[] = [];
 
-  cards: Card2[] = [];
+  cards: Card[] = [];
   generator: any[] = [];
-  setCards = new Set<Card2>();
+  setCards = new Set<Card>();
 
   classModal: boolean = false;
   classComplete: string = "";
@@ -36,7 +37,7 @@ export class AulaComponent implements OnInit {
   constructor(private service: CardsService) { }
 
   ngOnInit() {
-    this.service.cards.subscribe(
+    this.service.getCards().subscribe(
       data => this.cards = data,
       error => console.log(error)
     );
@@ -56,7 +57,7 @@ export class AulaComponent implements OnInit {
       return n;
     }
     else {
-      return n.substr(0, 120) + "...";
+      return n.substr(0, 120).replace(/<\/?[^>]+(>|$)/g, "") + "...";
     }
   }
 
@@ -100,14 +101,32 @@ export class AulaComponent implements OnInit {
       console.log("entrou...");
       this.classModal = true;
       this.classTitle = this.cards[n].titulo;
-      this.classComplete = this.cards[n].conteudo;
+      this.classComplete = this.cards[n].texto;
     }
     this.condButton = false;
   }
 
-  load() {
+  applyFilter() {
+
     this.loading = true;
     setTimeout(() => this.loading = false, 1000);
+
+    let filterYear;
+
+    if (this.selectedYear.length != 0) {
+      filterYear = { ano: this.selectedYear.map(e => parseInt(e)) };
+    }
+
+    this.selectedFormat.map(e => parseInt(e)).reduce((acc, v) => acc + v, 0);
+
+    this.service.getCards(filterYear).subscribe(
+      data => this.cards = data,
+      error => console.log(error)
+    );
+  }
+
+  downloadAula() {
+    this.service.getSlide(Array.from(this.setCards));
   }
 
 }
