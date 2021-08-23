@@ -1,1 +1,37 @@
-<p>homepage works!</p>
+<div class="grid">
+    <div class="col-12" id="center" style="padding-top: 200px;">
+        <img src="assets/logoWhiteCropped.png" width="500px">
+    </div>
+
+    <div class="col-12" style="padding-bottom: 80px;" id="center">
+        <span class="p-input-icon-left" style="width: 50%;">
+            <i class="pi pi-search"></i>
+            <input type="text" pInputText placeholder="O que você procura?" (keyup.enter)=goToCards(); />
+        </span>
+    </div>
+
+    <div class="col">
+        <div class="grid" id="center">
+            <tr *ngFor="let card of cards.slice(0, 3)">
+                <div class="col">
+                    <p-card class="card" title="Clique para ler notícia completa" styleClass="p-card-shadow" (click)="cardsModal(card.id)">
+                        <ng-template pTemplate="header">
+                            <img class="imgCard" alt="Card" src="assets/pic1.jpg">
+                        </ng-template>
+                        <ng-template pTemplate="title">
+                            <h4 style="margin-top: -20px;"><b>{{card.titulo}}</b></h4>
+                        </ng-template>
+                        <ng-template pTemplate="content">
+                            <p>{{shortedContent(card.texto)}}</p>
+                            <strong>Fonte: {{card.fonte}}</strong>
+                        </ng-template>
+                    </p-card>
+                </div>
+            </tr>
+        </div>
+    </div>
+
+    <p-dialog class="classModal" [header]="classTitle" [(visible)]="classModal" [draggable]="false" [modal]="true" [baseZIndex]="10000">
+        <div [innerHTML]="classComplete"></div>
+    </p-dialog>
+</div>

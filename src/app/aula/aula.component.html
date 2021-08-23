@@ -74,29 +74,30 @@
     </div>
 
     <div class="col-7">
-        <div class="grid">
+        <div class="grid" id="listCards">
             <tr *ngFor="let card of cards; let i = index">
                 <div class="col">
                     <p-card class="card" title="Clique para ler notícia completa" styleClass="p-card-shadow" (click)="cardsModal(card.id)">
                         <ng-template pTemplate="header">
-                            <!-- 320x192 -->
-                            <img id="imgCard" alt="Card" src="assets/pic1.jpg">
+                            <img class="imgCard" alt="Card" src="assets/pic1.jpg">
                         </ng-template>
-                        <div class="flex flex-column align-content-between">
-                            <div>
-                                <h2 style="margin-top: -20px;"><b>{{card.titulo}}</b></h2>
-                                <p>{{shortedContent(card.texto)}}</p>
-                                <strong style="word-break: break-word;">Fonte: {{card.fonte}}</strong>
+                        <ng-template pTemplate="title">
+                            <h4 style="margin-top: -20px;"><b>{{card.titulo}}</b></h4>
+                        </ng-template>
+                        <ng-template pTemplate="content">
+                            <p>{{shortedContent(card.texto)}}</p>
+                            <strong>Fonte: {{card.fonte}}</strong>
+                        </ng-template>
+                        <ng-template pTemplate="footer">
+                            <div class="flex flex-row-reverse flex-wrap" style="padding-bottom: 0px;">
+                                <div class="col-2">
+                                    <button pButton pRipple type="button" icon="pi pi-plus" class="p-button-rounded p-button-success p-button-outlined" title="Adicionar ao gerador de aulas" (click)="addGenerator(card.id)" style="color: #34A853; "></button>
+                                </div>
+                                <div class="col-2">
+                                    <button pButton pRipple type="button" icon="pi pi-times" class="p-button-rounded p-button-danger p-button-outlined" title="Não tenho interesse" style="color: #D32F2F;"></button>
+                                </div>
                             </div>
-                        </div>
-                        <div class="p-card-footer flex flex-row-reverse flex-wrap" style="padding-bottom: 0px;">
-                            <div class="col-2">
-                                <button pButton pRipple type="button" icon="pi pi-plus" class="p-button-rounded p-button-success p-button-outlined" title="Adicionar ao gerador de aulas" (click)="addGenerator(card.id)" style="color: #34A853; "></button>
-                            </div>
-                            <div class="col-2">
-                                <button pButton pRipple type="button" icon="pi pi-times" class="p-button-rounded p-button-danger p-button-outlined" title="Não tenho interesse" style="color: #D32F2F;"></button>
-                            </div>
-                        </div>
+                        </ng-template>
                     </p-card>
                 </div>
             </tr>
@@ -125,14 +126,6 @@
                     </div>
                 </div>
             </tr>
-
-            <!--             <tr *ngFor="let title of setCards">
-                <p-card class="generatorCard">
-                    <ng-template pTemplate="header">
-                        <img id="imgGenerator" alt="Card" src="assets/{{title.pic}}.jpg">
-                    </ng-template>
-                </p-card>
-            </tr> -->
 
         </p-card>
     </div>

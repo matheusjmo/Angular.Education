@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { asapScheduler } from 'rxjs';
 import { Card } from '../model/card.interface';
 import { CardsService } from '../service/card.service';
@@ -10,14 +10,13 @@ import { CardsService } from '../service/card.service';
 })
 export class AulaComponent implements OnInit {
 
-  cont: number = 0;
+  cards: Card[] = [];
 
   themes: string[] = []
   selectedTheme: string = "";
   selectedYear: string[] = [];
   selectedFormat: string[] = [];
 
-  cards: Card[] = [];
   generator: any[] = [];
   setCards = new Set<Card>();
 
@@ -32,7 +31,7 @@ export class AulaComponent implements OnInit {
   deleteCardGenerator: any;
 
   loading: boolean = false;
-
+  cont: number = 0;
 
   constructor(private service: CardsService) { }
 
@@ -41,15 +40,8 @@ export class AulaComponent implements OnInit {
       data => this.cards = data,
       error => console.log(error)
     );
-  }
 
-  ngDoCheck() {
-    var length = this.cards.length;
-    for (let i = 0; i < length; i++) {
-      if (!this.themes.includes(this.cards[i].tema)) {
-        this.themes.push(this.cards[i].tema);
-      }
-    }
+    this.service.themes.subscribe(data => this.themes = data);
   }
 
   shortedContent(n: string) {
@@ -82,15 +74,6 @@ export class AulaComponent implements OnInit {
     this.deleteModal = false;
   }
 
-
-  /*   generatorModal(n: any) {
-      this.deleteModal = true;
-      this.classTitle = this.cards[n].titulo;
-      if (this.generatorDelete) {
-        this.setCards.delete(this.cards[n]);
-      }
-    } */
-
   cardsModal(n: any) {
     //adicionar titulo ao header
     //
@@ -111,15 +94,27 @@ export class AulaComponent implements OnInit {
     this.loading = true;
     setTimeout(() => this.loading = false, 1000);
 
-    let filterYear;
+    let filterYear = "";
+    let filterTheme = "";
+    let filter = "";
 
     if (this.selectedYear.length != 0) {
-      filterYear = { ano: this.selectedYear.map(e => parseInt(e)) };
+      filter = "{ano: " + this.selectedYear.map(e => parseInt(e));
     }
 
-    this.selectedFormat.map(e => parseInt(e)).reduce((acc, v) => acc + v, 0);
+    if (Boolean(this.selectedTheme)) {
+      if (Boolean(filter)) {
+        filter += ", tema: " + this.selectedTheme
+      } else {
+        filter = "{tema: " + this.selectedTheme;
+      }
+    }
 
-    this.service.getCards(filterYear).subscribe(
+    filter += "}";
+
+    //this.selectedFormat.map(e => parseInt(e)).reduce((acc, v) => acc + v, 0);
+
+    this.service.getCards(JSON.parse(filter)).subscribe(
       data => this.cards = data,
       error => console.log(error)
     );
