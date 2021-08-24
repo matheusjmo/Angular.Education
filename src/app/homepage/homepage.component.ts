@@ -1,7 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Card } from '../model/card.interface';
 import { CardsService } from '../service/card.service';
 import { Router } from '@angular/router';
+import { DataService } from '../service/data.service';
+import { Injectable } from '@angular/core';
+
 
 @Component({
   selector: 'app-homepage',
@@ -16,15 +19,20 @@ export class HomepageComponent implements OnInit {
   classTitle: string = "";
   classComplete: string = "";
 
+  constructor(private service: CardsService, private router: Router, private dataService: DataService) { }
 
-  constructor(private service: CardsService, private router: Router) { }
+  get txtSrc(): string {
+    return this.dataService.sharedData;
+  }
+  set txtSrc(value: string) {
+    this.dataService.sharedData = value;
+  }
 
   ngOnInit() {
     this.service.getCards().subscribe(
       data => this.cards = data,
       error => console.log(error)
     );
-
   }
 
   shortedContent(n: string) {
@@ -42,7 +50,7 @@ export class HomepageComponent implements OnInit {
     this.classComplete = this.cards[n].texto;
   }
 
-  goToCards() {
+  textSearch() {
     this.router.navigateByUrl('/aulas');
   }
 

@@ -2,8 +2,10 @@
     margin: 0px;
 }
 
-::ng-deep body{
-    background-color: #ebf0ee;
+#body{
+    background-color: #ebf0ee !important;
+    min-height: 100vh;
+    height: 100%;
 }
 
 /*      Card        */
@@ -19,14 +21,10 @@
     
 }
 
-/* .card ::ng-deep .p-card .p-card-body{
-    padding-bottom: 0px;
-} */
 
 .card ::ng-deep .p-card{
-/*     margin-right: 10px;
-    margin-left: 10px; */
-    padding: 0px;
+    margin-right: 10px;
+    margin-left: 10px;
     cursor: pointer;
     width: 320px;
     height: 500px;

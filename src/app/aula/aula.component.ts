@@ -1,7 +1,9 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { asapScheduler } from 'rxjs';
 import { Card } from '../model/card.interface';
 import { CardsService } from '../service/card.service';
+import { DataService } from '../service/data.service';
+import { Injectable } from '@angular/core';
 
 @Component({
   selector: 'app-aula',
@@ -16,6 +18,7 @@ export class AulaComponent implements OnInit {
   selectedTheme: string = "";
   selectedYear: string[] = [];
   selectedFormat: string[] = [];
+  search: string = "";
 
   generator: any[] = [];
   setCards = new Set<Card>();
@@ -33,15 +36,23 @@ export class AulaComponent implements OnInit {
   loading: boolean = false;
   cont: number = 0;
 
-  constructor(private service: CardsService) { }
+  constructor(private cardService: CardsService, private dataService: DataService) { }
+
+  get txtSrc(): string {
+    return this.dataService.sharedData;
+  }
+  set txtSrc(value: string) {
+    this.dataService.sharedData = value;
+  }
 
   ngOnInit() {
-    this.service.getCards().subscribe(
+    console.log(this.txtSrc);
+    this.cardService.getCards(null, this.txtSrc).subscribe(
       data => this.cards = data,
       error => console.log(error)
     );
 
-    this.service.themes.subscribe(data => this.themes = data);
+    this.cardService.themes.subscribe(data => this.themes = data);
   }
 
   shortedContent(n: string) {
@@ -94,34 +105,33 @@ export class AulaComponent implements OnInit {
     this.loading = true;
     setTimeout(() => this.loading = false, 1000);
 
-    let filterYear = "";
-    let filterTheme = "";
-    let filter = "";
+    let filter: any = {};
+    let search;
 
     if (this.selectedYear.length != 0) {
-      filter = "{ano: " + this.selectedYear.map(e => parseInt(e));
+      filter["ano"] = this.selectedYear.map(e => parseInt(e));
+      /* filter = "{ano: " + this.selectedYear.map(e => parseInt(e)); */
     }
 
-    if (Boolean(this.selectedTheme)) {
-      if (Boolean(filter)) {
-        filter += ", tema: " + this.selectedTheme
-      } else {
-        filter = "{tema: " + this.selectedTheme;
-      }
+    if (this.selectedTheme !== "") {
+      filter["tema"] = this.selectedTheme;
     }
 
-    filter += "}";
+    if (this.txtSrc !== "") {
+      search = this.txtSrc;
+    }
 
     //this.selectedFormat.map(e => parseInt(e)).reduce((acc, v) => acc + v, 0);
 
-    this.service.getCards(JSON.parse(filter)).subscribe(
+    this.cardService.getCards(filter, search).subscribe(
       data => this.cards = data,
       error => console.log(error)
     );
   }
 
+
   downloadAula() {
-    this.service.getSlide(Array.from(this.setCards));
+    this.cardService.getSlideAndDownload(Array.from(this.setCards));
   }
 
 }

@@ -1,5 +1,6 @@
-::ng-deep body{
-    background-color: #DB0B5B;
+#body{
+    background-color: #DB0B5B !important;
+    height: 100%;
 }
 
 #center{
