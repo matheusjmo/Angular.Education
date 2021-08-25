@@ -27,7 +27,7 @@
                         <p-dropdown placeholder="Ciências" [disabled]="true" title="Por enquanto só temos aulas de ciências"></p-dropdown>
                     </div>
                     <div class="col-12">
-                        <p-dropdown [options]="themes" [(ngModel)]="selectedTheme" placeholder="Escolha um tema" title="Escolha um tema"></p-dropdown>
+                        <p-dropdown [options]="themes" [(ngModel)]="selectedTheme" placeholder="Escolha um tema" title="Escolha um tema" optionLabel="name"></p-dropdown>
                     </div>
 
                     <h2 style="padding-left: 15px;">Series: </h2>
@@ -55,16 +55,16 @@
                     <h2 style="padding-left: 15px;">Formato: </h2>
                     <div class="grid">
                         <div class="col-6" style="padding-left: 15px;">
-                            <p-checkbox name="imagem" value="1" [(ngModel)]="selectedFormat" label="imagem"></p-checkbox>
+                            <p-checkbox name="imagem" value="imagem" [(ngModel)]="selectedFormat" label="imagem"></p-checkbox>
                         </div>
                         <div class="col-6" style="padding-left: 30px;">
-                            <p-checkbox name="video" value="2" [(ngModel)]="selectedFormat" label="vídeo"></p-checkbox>
+                            <p-checkbox name="video" value="video" [(ngModel)]="selectedFormat" label="vídeo"></p-checkbox>
                         </div>
                         <div class="col-6" style="padding-left: 15px;">
-                            <p-checkbox name="quadrinhos" value="4" [(ngModel)]="selectedFormat" label="quadrinhos"></p-checkbox>
+                            <p-checkbox name="quadrinhos" value="quadrinhos" [(ngModel)]="selectedFormat" label="quadrinhos"></p-checkbox>
                         </div>
                         <div class="col-6" style="padding-left: 30px;">
-                            <p-checkbox name="gifs" value="8" [(ngModel)]="selectedFormat" label="gifs"></p-checkbox>
+                            <p-checkbox name="gifs" value="gifs" [(ngModel)]="selectedFormat" label="gifs"></p-checkbox>
                         </div>
                     </div>
 
@@ -80,7 +80,7 @@
             <div class="grid" id="listCards">
                 <tr *ngFor="let card of cards; let i = index">
                     <div class="col">
-                        <p-card class="card" title="Clique para ler notícia completa" styleClass="p-card-shadow" (click)="cardsModal(card.id)">
+                        <p-card class="card" title="Clique para ler notícia completa" styleClass="p-card-shadow" (click)="cardsModal(card)">
                             <ng-template pTemplate="header">
                                 <img class="imgCard" alt="Card" src="assets/pic1.jpg">
                             </ng-template>
@@ -94,7 +94,7 @@
                             <ng-template pTemplate="footer">
                                 <div class="flex flex-row-reverse flex-wrap" style="padding-bottom: 0px;">
                                     <div class="col-2">
-                                        <button pButton pRipple type="button" icon="pi pi-plus" class="p-button-rounded p-button-success p-button-outlined" title="Adicionar ao gerador de aulas" (click)="addGenerator(card.id)" style="color: #34A853; "></button>
+                                        <button pButton pRipple type="button" icon="pi pi-plus" class="p-button-rounded p-button-success p-button-outlined" title="Adicionar ao gerador de aulas" (click)="addGenerator(card)" style="color: #34A853; "></button>
                                     </div>
                                     <div class="col-2">
                                         <button pButton pRipple type="button" icon="pi pi-times" class="p-button-rounded p-button-danger p-button-outlined" title="Não tenho interesse" style="color: #D32F2F;"></button>
@@ -120,9 +120,9 @@
                 <br>
 
                 <tr *ngFor="let card of setCards">
-                    <div class="grid" id="generatorCard" (click)="generatorModal(card.id)">
+                    <div class="grid" id="generatorCard" (click)="generatorModal(card)">
                         <div class="col-4" style="padding: 0px;">
-                            <img id="imgGenerator" alt="Card" src="assets/{{card.imagem}}.jpg">
+                            <img id="imgGenerator" alt="Card" src="assets/pic1.jpg">
                         </div>
                         <div class="col" style="padding-top: 20px;">
                             <b>{{card.titulo}}</b>

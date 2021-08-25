@@ -13,13 +13,15 @@ import { Injectable } from '@angular/core';
 })
 export class HomepageComponent implements OnInit {
 
-  cards: Card[] = []
+  cards: Card[] = [];
 
   classModal: boolean = false;
   classTitle: string = "";
   classComplete: string = "";
 
-  constructor(private service: CardsService, private router: Router, private dataService: DataService) { }
+  constructor(private service: CardsService, private router: Router, private dataService: DataService) {
+    this.dataService.sharedData = "";
+  }
 
   get txtSrc(): string {
     return this.dataService.sharedData;

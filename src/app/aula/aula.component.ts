@@ -1,9 +1,9 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { asapScheduler } from 'rxjs';
+import { Component, OnInit } from '@angular/core';
 import { Card } from '../model/card.interface';
 import { CardsService } from '../service/card.service';
 import { DataService } from '../service/data.service';
-import { Injectable } from '@angular/core';
+
+
 
 @Component({
   selector: 'app-aula',
@@ -14,11 +14,16 @@ export class AulaComponent implements OnInit {
 
   cards: Card[] = [];
 
-  themes: string[] = []
-  selectedTheme: string = "";
+  themes: any[] = [];
+  selectedTheme: any;
   selectedYear: string[] = [];
   selectedFormat: string[] = [];
   search: string = "";
+
+  imagem: boolean = false;
+  video: boolean = false;
+  quadrinhos: boolean = false;
+  gifs: boolean = false;
 
   generator: any[] = [];
   setCards = new Set<Card>();
@@ -52,7 +57,9 @@ export class AulaComponent implements OnInit {
       error => console.log(error)
     );
 
-    this.cardService.themes.subscribe(data => this.themes = data);
+    this.cardService.themes.subscribe(data => this.themes = [{ name: "Todos os temas", value: "" }].concat(data.map(e => {
+      return { name: e, value: e };
+    })));
   }
 
   shortedContent(n: string) {
@@ -64,20 +71,20 @@ export class AulaComponent implements OnInit {
     }
   }
 
-  addGenerator(n: any) {
+  addGenerator(card: Card) {
     this.condButton = true;
-    if (!this.setCards.has(this.cards[n])) {
-      this.setCards.add(this.cards[n]);
+    if (!this.setCards.has(card)) {
+      this.setCards.add(card);
     }
     else {
       this.failModal = true;
     }
   }
 
-  generatorModal(n: any) {
+  generatorModal(card: Card) {
     this.deleteModal = true;
-    this.classTitle = this.cards[n].titulo;
-    this.deleteCardGenerator = this.cards[n]
+    this.classTitle = card.titulo;
+    this.deleteCardGenerator = card
   }
 
   generatorDelete() {
@@ -85,17 +92,13 @@ export class AulaComponent implements OnInit {
     this.deleteModal = false;
   }
 
-  cardsModal(n: any) {
-    //adicionar titulo ao header
-    //
-    //
-    //
+  cardsModal(card: Card) {
     console.log(this.condButton);
     if (this.condButton == false) {
       console.log("entrou...");
       this.classModal = true;
-      this.classTitle = this.cards[n].titulo;
-      this.classComplete = this.cards[n].texto;
+      this.classTitle = card.titulo;
+      this.classComplete = card.texto;
     }
     this.condButton = false;
   }
@@ -110,18 +113,19 @@ export class AulaComponent implements OnInit {
 
     if (this.selectedYear.length != 0) {
       filter["ano"] = this.selectedYear.map(e => parseInt(e));
-      /* filter = "{ano: " + this.selectedYear.map(e => parseInt(e)); */
     }
 
-    if (this.selectedTheme !== "") {
-      filter["tema"] = this.selectedTheme;
+    if (this.selectedTheme !== undefined && this.selectedTheme["value"] !== "") {
+      filter["tema"] = this.selectedTheme["value"];
     }
+
+    this.selectedFormat.forEach(e => filter[e] = 1);
+    console.log(filter);
+
 
     if (this.txtSrc !== "") {
       search = this.txtSrc;
     }
-
-    //this.selectedFormat.map(e => parseInt(e)).reduce((acc, v) => acc + v, 0);
 
     this.cardService.getCards(filter, search).subscribe(
       data => this.cards = data,

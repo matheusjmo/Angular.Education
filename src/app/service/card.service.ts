@@ -36,7 +36,7 @@ export class CardsService {
     return cards.filter(card => Object.keys(filters ?? {}).reduce((acc, key) => acc &&
       (
         isNil((card as any)[key])
-        || (typeof (filters[key]) === "string" && (card as any)[key] === filters[key])
+        || ((typeof (filters[key]) === "string" || typeof (filters[key]) === "number") && (card as any)[key] === filters[key])
         || (Array.isArray(filters[key]) && filters[key].some((e: any) => (card as any)[key] === e))
       )
       , true as boolean));
