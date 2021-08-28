@@ -17,7 +17,7 @@
                     <div class="col">
                         <p-card class="card" title="Clique para ler notícia completa" styleClass="p-card-shadow" (click)="cardsModal(card.id)">
                             <ng-template pTemplate="header">
-                                <img class="imgCard" alt="Card" src="assets/pic1.jpg">
+                                <img class="imgCard" alt="Card" src="assets/img/{{card.miniatura}}">
                             </ng-template>
                             <ng-template pTemplate="title">
                                 <h4 style="margin-top: -20px;"><b>{{card.titulo}}</b></h4>

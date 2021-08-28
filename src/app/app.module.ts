@@ -16,6 +16,8 @@ import { FormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AulaComponent } from './aula/aula.component';
 import { HomepageComponent } from './homepage/homepage.component';
+import { PaginatorModule } from 'primeng/paginator';
+import { RadioButtonModule } from 'primeng/radiobutton';
 
 @NgModule({
   declarations: [
@@ -37,6 +39,8 @@ import { HomepageComponent } from './homepage/homepage.component';
     InputTextModule,
     ListboxModule,
     CheckboxModule,
+    PaginatorModule,
+    RadioButtonModule
   ],
   providers: [],
   bootstrap: [AppComponent]

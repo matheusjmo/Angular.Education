@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Card } from '../model/card.interface';
 import { CardsService } from '../service/card.service';
 import { DataService } from '../service/data.service';
+import { Paginator } from 'primeng/paginator';
+import { Router } from '@angular/router';
 
 
 
@@ -41,7 +43,14 @@ export class AulaComponent implements OnInit {
   loading: boolean = false;
   cont: number = 0;
 
-  constructor(private cardService: CardsService, private dataService: DataService) { }
+  @ViewChild(Paginator)
+  paginator!: Paginator;
+  cardsPerPage: number = 6;
+  currentPage: number = 1;
+  firstCard: number = 0;
+  lastCard: number = this.cardsPerPage;
+
+  constructor(private cardService: CardsService, private dataService: DataService, private router: Router) { }
 
   get txtSrc(): string {
     return this.dataService.sharedData;
@@ -63,12 +72,9 @@ export class AulaComponent implements OnInit {
   }
 
   shortedContent(n: string) {
-    if (n.length <= 120) {
-      return n;
-    }
-    else {
-      return n.substr(0, 120).replace(/<\/?[^>]+(>|$)/g, "") + "...";
-    }
+    var p = document.createElement("p");
+    p.innerHTML = n;
+    return p.innerText;
   }
 
   addGenerator(card: Card) {
@@ -136,6 +142,16 @@ export class AulaComponent implements OnInit {
 
   downloadAula() {
     this.cardService.getSlideAndDownload(Array.from(this.setCards));
+  }
+
+  routeHomepage() {
+    this.router.navigateByUrl("/")
+  }
+
+  paginate() {
+    this.currentPage = this.paginator.getPage();
+    this.firstCard = this.cardsPerPage * (this.currentPage);
+    this.lastCard = this.cardsPerPage * (this.currentPage + 1);
   }
 
 }

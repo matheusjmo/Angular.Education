@@ -8,6 +8,7 @@
     height: 100%;
 }
 
+
 /*      Card        */
 
 #listCards{
@@ -21,13 +22,12 @@
     
 }
 
-
 .card ::ng-deep .p-card{
     margin-right: 10px;
     margin-left: 10px;
     cursor: pointer;
     width: 320px;
-    height: 500px;
+    height: 470px;
     box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.06), 0px 7px 9px rgba(0, 0, 0, 0.12), 0px 20px 25px -8px rgba(0, 0, 0, 0.18);
 }
 
@@ -42,7 +42,13 @@
 }
 
 .card ::ng-deep .p-card-content{
-    height: 100px;
+    padding-top: 0px;
+    height: 85px;
+    overflow: hidden;
+    text-align: justify;
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
 } 
 
 .imgCard{
@@ -55,6 +61,7 @@
 .card ::ng-deep .p-card:hover{
     transform: translateY(-5px);
 }
+
 
 /*      Generator       */
 
@@ -91,7 +98,7 @@
 #generatorCard{
     background-color: #F5F7F6;
     margin-left: 0px;
-    width: fit-content;
+    width: 415px;
     height: 85px;
     border-radius: 10px;
     box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.5);
@@ -114,6 +121,7 @@
     border-bottom-left-radius: 10px;
 }
 
+
 /***************************************************************************************************************************************************************/
 
 #filter ::ng-deep .p-dropdown, .p-inputtext, .p-input-icon-left{
@@ -132,7 +140,11 @@
 }
 
 ::ng-deep .p-dialog{
-    width: 70%;
+    width: 70%; 
+}
+
+.classModalContent{
+    max-width: 100%;
 }
 
 .deleteModal ::ng-deep .p-dialog{
