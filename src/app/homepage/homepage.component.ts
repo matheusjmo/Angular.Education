@@ -37,13 +37,10 @@ export class HomepageComponent implements OnInit {
     );
   }
 
-  shortedContent(n: string) {
-    if (n.length <= 120) {
-      return n;
-    }
-    else {
-      return n.substr(0, 120).replace(/<\/?[^>]+(>|$)/g, "") + "...";
-    }
+  htmlParse(n: string) {
+    var p = document.createElement("p");
+    p.innerHTML = n;
+    return p.innerText;
   }
 
   cardsModal(n: any) {
@@ -53,6 +50,11 @@ export class HomepageComponent implements OnInit {
   }
 
   textSearch() {
+    this.router.navigateByUrl('/aulas');
+  }
+
+  search() {
+    this.dataService.sharedData = "";
     this.router.navigateByUrl('/aulas');
   }
 

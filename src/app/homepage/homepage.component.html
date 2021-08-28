@@ -1,21 +1,29 @@
+<!-- matheusjmo -->
 <div id="body">
     <div class="grid">
-        <div class="col-12" id="center" style="padding-top: 200px;">
+        <div class="col-12" id="center" style="padding-top: 140px;">
             <img src="assets/logoWhiteCropped.png" width="500px">
         </div>
 
-        <div class="col-12" style="padding-bottom: 80px;" id="center">
+        <div class="col-12" id="center" style="padding-bottom: 30px;">
             <span class="p-input-icon-left" style="width: 50%;">
                 <i class="pi pi-search"></i>
                 <input type="text" pInputText placeholder="O que você procura?" [(ngModel)]="txtSrc" (keyup.enter)=textSearch(); />
             </span>
         </div>
 
+        <div class="col-12" style="padding-bottom: 80px;">
+            <div id="center">
+                <button pButton pRipple type="button" icon="pi pi-search" label="Pesquisar" class="p-button-raised p-button-text" id="buttonHome" style="margin-right: 50px;" (click)="textSearch()"></button>
+                <button pButton pRipple type="button" label="Retornar Todo Conteúdo" class="p-button-raised p-button-text" id="buttonHome" (click)=search()></button>
+            </div>
+        </div>
+
         <div class="col">
             <div class="grid" id="center">
                 <tr *ngFor="let card of cards.slice(0, 3)">
                     <div class="col">
-                        <p-card class="card" title="Clique para ler notícia completa" styleClass="p-card-shadow" (click)="cardsModal(card.id)">
+                        <p-card class="cardHome" title="Clique para ler notícia completa" styleClass="p-card-shadow" (click)="cardsModal(card)">
                             <ng-template pTemplate="header">
                                 <img class="imgCard" alt="Card" src="assets/img/{{card.miniatura}}">
                             </ng-template>
@@ -23,8 +31,12 @@
                                 <h4 style="margin-top: -20px;"><b>{{card.titulo}}</b></h4>
                             </ng-template>
                             <ng-template pTemplate="content">
-                                <p>{{shortedContent(card.texto)}}</p>
-                                <strong>Fonte: {{card.fonte}}</strong>
+                                <p style="margin-top: 0px;">{{htmlParse(card.texto)}}</p>
+                            </ng-template>
+                            <ng-template pTemplate="footer">
+                                <div>
+                                    <strong>Fonte: {{card.fonte}}</strong>
+                                </div>
                             </ng-template>
                         </p-card>
                     </div>

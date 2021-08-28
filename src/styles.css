@@ -23,6 +23,12 @@ body{
     margin: 0px;
 }
 
+#center{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .logo {
     float: left;
     height: 100%;

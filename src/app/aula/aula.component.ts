@@ -19,7 +19,7 @@ export class AulaComponent implements OnInit {
   themes: any[] = [];
   selectedTheme: any;
   selectedYear: string[] = [];
-  selectedFormat: string[] = [];
+  selectedFormat: string = "";
   search: string = "";
 
   imagem: boolean = false;
@@ -45,10 +45,9 @@ export class AulaComponent implements OnInit {
 
   @ViewChild(Paginator)
   paginator!: Paginator;
-  cardsPerPage: number = 6;
   currentPage: number = 1;
   firstCard: number = 0;
-  lastCard: number = this.cardsPerPage;
+  lastCard: number = 6;
 
   constructor(private cardService: CardsService, private dataService: DataService, private router: Router) { }
 
@@ -60,7 +59,6 @@ export class AulaComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log(this.txtSrc);
     this.cardService.getCards(null, this.txtSrc).subscribe(
       data => this.cards = data,
       error => console.log(error)
@@ -69,9 +67,11 @@ export class AulaComponent implements OnInit {
     this.cardService.themes.subscribe(data => this.themes = [{ name: "Todos os temas", value: "" }].concat(data.map(e => {
       return { name: e, value: e };
     })));
+
+    this.selectedFormat = "imagem";
   }
 
-  shortedContent(n: string) {
+  htmlParse(n: string) {
     var p = document.createElement("p");
     p.innerHTML = n;
     return p.innerText;
@@ -85,6 +85,11 @@ export class AulaComponent implements OnInit {
     else {
       this.failModal = true;
     }
+  }
+
+  removeCard(card: Card) {
+    let index = this.cards.indexOf(card);
+    this.cards.splice(index, 1);
   }
 
   generatorModal(card: Card) {
@@ -101,7 +106,6 @@ export class AulaComponent implements OnInit {
   cardsModal(card: Card) {
     console.log(this.condButton);
     if (this.condButton == false) {
-      console.log("entrou...");
       this.classModal = true;
       this.classTitle = card.titulo;
       this.classComplete = card.texto;
@@ -125,9 +129,11 @@ export class AulaComponent implements OnInit {
       filter["tema"] = this.selectedTheme["value"];
     }
 
-    this.selectedFormat.forEach(e => filter[e] = 1);
-    console.log(filter);
+    if (this.selectedFormat !== "") {
+      filter["" + this.selectedFormat] = 1;
+    }
 
+    //this.selectedFormat.forEach(e => filter[e] = 1);
 
     if (this.txtSrc !== "") {
       search = this.txtSrc;
@@ -150,8 +156,8 @@ export class AulaComponent implements OnInit {
 
   paginate() {
     this.currentPage = this.paginator.getPage();
-    this.firstCard = this.cardsPerPage * (this.currentPage);
-    this.lastCard = this.cardsPerPage * (this.currentPage + 1);
+    this.firstCard = 6 * (this.currentPage);
+    this.lastCard = 6 * (this.currentPage + 1);
   }
 
 }

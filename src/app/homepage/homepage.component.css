@@ -3,12 +3,6 @@
     height: 100%;
 }
 
-#center{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
 .grid{
     margin: 0px;
 }
@@ -17,6 +11,7 @@
     border-radius: 50px;
     width: 100%;
 }
+
 ::ng-deep .p-dialog{
     width: 70%;
 }
@@ -28,27 +23,33 @@
     
 }
 
-.card ::ng-deep .p-card{
+.cardHome ::ng-deep .p-card{
     margin-right: 10px;
     margin-left: 10px;
     cursor: pointer;
     width: 320px;
-    height: 500px;
+    height: 430px;
     box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.06), 0px 7px 9px rgba(0, 0, 0, 0.12), 0px 20px 25px -8px rgba(0, 0, 0, 0.18);
 }
 
-.card ::ng-deep .p-card-header{
+.cardHome ::ng-deep .p-card-header{
     height: 192px;
 }
 
-.card ::ng-deep .p-card-title{
+.cardHome ::ng-deep .p-card-title{
     padding-top: 10px;
     margin: 0px;
     height: 70px;
 }
 
-.card ::ng-deep .p-card-content{
-    height: 100px;
+.cardHome ::ng-deep .p-card-content{
+    padding-top: 0px;
+    height: 85px;
+    overflow: hidden;
+    text-align: justify;
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
 } 
 
 .imgCard{
@@ -58,7 +59,7 @@
     height: 100%;
 }
 
-.card ::ng-deep .p-card:hover{
+.cardHome ::ng-deep .p-card:hover{
     transform: translateY(-5px);
 }
 
@@ -66,5 +67,16 @@
 
 ::ng-deep .p-dialog{
     width: 70%;
+}
+
+#buttonHome{
+    background-color: white;
+    color: #72042e;
+}
+
+#buttonHome:hover{
+    border-color: white;
+    border-width: 2px;
+    box-shadow: rgba(0, 0, 0, 0.56) 0px 22px 70px 4px;
 }
 

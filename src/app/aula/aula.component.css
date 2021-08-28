@@ -43,7 +43,7 @@
 
 .card ::ng-deep .p-card-content{
     padding-top: 0px;
-    height: 85px;
+    height: 84px;
     overflow: hidden;
     text-align: justify;
     display: -webkit-box;
