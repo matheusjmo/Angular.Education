@@ -80,13 +80,13 @@
     color: black;
     width: fit-content;
     margin: 0px;
-    padding-left: 60px;
+    padding-left: 50px;
 }
 
 #generatorBtn{
     margin: 0%;
     background-color: white; 
-    color: #DB0B5B;
+    color: black;
 }
 
 #generatorBtn:hover{
