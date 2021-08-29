@@ -129,11 +129,6 @@
     width: 100%;
 }
 
-#filterDiv{
-    margin-left: 25%;
-    margin-top: 20px;
-}
-
 #filterBtn ::ng-deep .p-button{
     background-color: #FF8A3D;
     border-color: #FF8A3D;
