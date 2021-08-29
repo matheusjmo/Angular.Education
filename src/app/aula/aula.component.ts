@@ -145,6 +145,9 @@ export class AulaComponent implements OnInit {
     );
   }
 
+  refresh() {
+    window.location.reload();
+  }
 
   downloadAula() {
     this.cardService.getSlideAndDownload(Array.from(this.setCards));

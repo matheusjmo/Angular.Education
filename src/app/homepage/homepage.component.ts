@@ -53,7 +53,7 @@ export class HomepageComponent implements OnInit {
     this.router.navigateByUrl('/aulas');
   }
 
-  search() {
+  allContent() {
     this.dataService.sharedData = "";
     this.router.navigateByUrl('/aulas');
   }
