@@ -43,10 +43,10 @@ export class HomepageComponent implements OnInit {
     return p.innerText;
   }
 
-  cardsModal(n: any) {
+  cardsModal(card: Card) {
     this.classModal = true;
-    this.classTitle = this.cards[n].titulo;
-    this.classComplete = this.cards[n].texto;
+    this.classTitle = card.titulo;
+    this.classComplete = card.texto;
   }
 
   textSearch() {

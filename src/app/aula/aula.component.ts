@@ -143,6 +143,8 @@ export class AulaComponent implements OnInit {
       data => this.cards = data,
       error => console.log(error)
     );
+
+    this.paginator.changePage(0)
   }
 
   refresh() {
